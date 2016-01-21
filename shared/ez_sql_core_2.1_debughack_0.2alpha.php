@@ -76,7 +76,7 @@
 	*  sets once returned
 	*/
 
-	class ezSQLcore
+	class ezSQLcore_renamed_1
 	{
 
 		var $trace           = false;  // same as $debug_all
