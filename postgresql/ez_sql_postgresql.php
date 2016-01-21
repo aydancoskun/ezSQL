@@ -20,7 +20,7 @@
 		1 => 'Require $dbuser and $dbpassword to connect to a database server',
 		2 => 'Error establishing PostgreSQL database connection. Correct user/password? Correct hostname? Database server running?',
 		3 => 'Require $dbname to select a database',
-		4 => 'mySQL database connection is not active',
+		4 => 'PostgreSQL database connection is not active',
 		5 => 'Unexpected error while trying to select database'
 	);
 
@@ -219,9 +219,10 @@
 					//$this->insert_id = pg_last_oid($this->result);
 
 					// Thx. Rafael Bernal
-					$insert_query = pg_query("SELECT lastval();");
-					$insert_row = pg_fetch_row($insert_query);
-					$this->insert_id = $insert_row[0];
+					// Sorry but this is not working for me
+					//$insert_query = pg_query("SELECT lastval();");
+					//$insert_row = pg_fetch_row($insert_query);
+					//$this->insert_id = $insert_row[0];
 				}
 
 				// Return number fo rows affected
@@ -239,7 +240,8 @@
 							$i=0;
 							while ($i < @pg_num_fields($this->result))
 							{
-			    					$this->col_info[$i]->name = pg_field_name($this->result,$i);
+									if (!isset($this->col_info[$i])) $this->col_info[$i] = new stdClass();
+			    						$this->col_info[$i]->name = pg_field_name($this->result,$i);
 									$this->col_info[$i]->type = pg_field_type($this->result,$i);
 									$this->col_info[$i]->size = pg_field_size($this->result,$i);
 								$i++;
